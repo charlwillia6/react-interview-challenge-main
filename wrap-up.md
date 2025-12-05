@@ -4,11 +4,11 @@
 
 There were some type safety issues and missing error handling in the transaction handlers. 
 
-I ended up using the Account type from ui/Types/Account.ts in transactionRules.ts, which I ended up copying and adding to the API. I could have configured the tsconfig to have a shared directory for common types to reuse across the codebase, but that would have included reconfiguring the Docker build file along with the tsconfig, and I felt that would have been too many changes that had nothing to do with the original requests.
+I ended up using the Account type from ui/Types/Account.ts in transactionRules.ts, which I ended up copying and adding to the API. I first tried to move the Acount.ts to a shared types directory, but then realized that the project would need further configuration in order to share between the API and UI. I felt that applying those changes would have been beyond the scope of the requested functionality.
 
 I also made the "Account" type a little more strict.
 
-No testing exists, even though the packages have been added.
+No testing exists, even though the packages have been added. If testing had been implemented, it would have been easier to prove the functionality was working correctly. Adding testing also was not part of the requested changes to the project.
 
 Error handling could be improved throughout the codebase to make it more robust.
 
@@ -33,6 +33,8 @@ I would also add a central configuration or settings directory.
 Instead of a components directory, I would group related functionality together in feature-based directories, in which you could add components, hooks, api calls, etc., as children. 
 
 The structure should be domain and feature first, and have layering inside each feature, with clear separation of concerns between business logic, data access, and presentation layers.
+
+I would also add a proper README.md with detailed documentation explaining the project structure, setup instructions, dependencies, and how to build, and run the application.
 
 ### Were there any pieces of this project that you were not able to complete that you'd like to mention?
 
