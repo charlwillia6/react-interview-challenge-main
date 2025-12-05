@@ -2,7 +2,11 @@
 
 ### What issues, if any, did you find with the existing code?
 
-There were some type safety issues and missing error handling in the transaction handlers. Also, I ended up using the Account type from ui/Types/Account.ts in transactionRules.ts, which was added to the API.  So, I moved the Account.ts to a shared/Types directory so it would make more sense to use in both the UI and API. I also made the "Account" type a little more strict.  However, this may still not be the right approach if this project were to expand significantly in the future.
+There were some type safety issues and missing error handling in the transaction handlers. 
+
+I ended up using the Account type from ui/Types/Account.ts in transactionRules.ts, which I ended up copying and adding to the API. I could have configured the tsconfig to have a shared directory for common types to reuse across the codebase, but that would have included reconfiguring the Docker build file along with the tsconfig, and I felt that would have been too many changes that had nothing to do with the original requests.
+
+I also made the "Account" type a little more strict.
 
 No testing exists, even though the packages have been added.
 
@@ -10,11 +14,11 @@ Error handling could be improved throughout the codebase to make it more robust.
 
 ### What issues, if any, did you find with the request to add functionality?
 
-I did not find any issue with this task.  It was pretty straightforward.  It took me longer to familiarize myself with the codebase than it did to apply the requests. I then went back and refactored the changes for optimization. Also, I added a TESTING.md for explaining in detail how to manually test the new added requests since no testing has been applied yet. Adding comprehensive tests would be the next step.
+I did not find any issue with this task. It was pretty straightforward.  It took me longer to familiarize myself with the codebase than it did to apply the requests. I then went back and refactored the original changes I made to make them more optimized. I added two records to the init-db.sql to manually test the requested functionality. I also added a TESTING.md for explaining in detail how to manually test the new added requests since no testing has been applied yet to the project.
 
 ### Would you modify the structure of this project if you were to start it over? If so, how?
 
-The structure is not that bad for a small project.  I would probably not use "utils" as a directory though as utils is not specific enough and could lead to a dumping ground for unrelated code. 
+The structure is not that bad for a small project.  I would probably not use "utils" as a directory as it's not specific enough and could lead to a dumping ground for unrelated code. 
 
 I would probably change the structure to be something like:
 
