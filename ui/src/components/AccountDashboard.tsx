@@ -22,6 +22,13 @@ export const AccountDashboard = (props: AccountDashboardProps) => {
       body: JSON.stringify({amount: depositAmount})
     }
     const response = await fetch(`http://localhost:3000/transactions/${account.accountNumber}/deposit`, requestOptions);
+    
+    if (!response.ok) {
+      const errorBody = await response.json().catch(() => ({}));
+      alert(errorBody.error || "Transaction failed");
+      return;
+    }
+
     const data = await response.json();
     setAccount({
       accountNumber: data.account_number,
@@ -39,6 +46,13 @@ export const AccountDashboard = (props: AccountDashboardProps) => {
       body: JSON.stringify({amount: withdrawAmount})
     }
     const response = await fetch(`http://localhost:3000/transactions/${account.accountNumber}/withdraw`, requestOptions);
+    
+    if (!response.ok) {
+      const errorBody = await response.json().catch(() => ({}));
+      alert(errorBody.error || "Transaction failed");
+      return;
+    }
+    
     const data = await response.json();
     setAccount({
       accountNumber: data.account_number,
