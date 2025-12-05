@@ -1,11 +1,11 @@
 import { query } from "../utils/db";
 import { getAccount } from "./accountHandler";
-import { Account, validateWithdrawal, validateDeposit } from "../utils/transactionRules";
+import { validateWithdrawal, validateDeposit } from "../utils/transactionRules";
 import { getTodaysWithdrawnTotal } from "../utils/transactionHistory";
+import type { Account } from "../../shared/Account";
 
 export const withdrawal = async (accountID: string, amount: number) => {
-  const accountRow = await getAccount(accountID);
-  const account = accountRow as Account;
+  const account: Account = await getAccount(accountID);
 
   const todaysWithdrawn = await getTodaysWithdrawnTotal(accountID);
 
@@ -38,8 +38,7 @@ export const withdrawal = async (accountID: string, amount: number) => {
 };
 
 export const deposit = async (accountID: string, amount: number) => {
-  const accountRow = await getAccount(accountID);
-  const account = accountRow as Account;
+  const account: Account = await getAccount(accountID);
 
   validateDeposit(account, amount);
 

@@ -1,9 +1,14 @@
-export type Account = {
-  account_number: number;
-  name: string;
-  amount: number;
-  type: "checking" | "savings" | "credit";
-  credit_limit: number | null;
+import type { Account } from "../../shared/Account";
+
+const MAX_WITHDRAWAL_PER_TRANSACTION = 200;
+const MAX_WITHDRAWAL_PER_DAY = 400;
+const WITHDRAWAL_INCREMENT = 5;
+const MAX_DEPOSIT_PER_TRANSACTION = 1000;
+
+const ensurePositiveAmount = (amount: number, context: "Withdrawal" | "Deposit") => {
+  if (amount <= 0) {
+    throw new Error(`${context} amount must be greater than 0`);
+  }
 };
 
 export const validateWithdrawal = (
@@ -11,49 +16,59 @@ export const validateWithdrawal = (
   amount: number,
   todaysWithdrawn: number
 ): void => {
-  if (amount <= 0) {
-    throw new Error("Withdrawal amount must be greater than 0");
+  ensurePositiveAmount(amount, "Withdrawal");
+
+  if (amount > MAX_WITHDRAWAL_PER_TRANSACTION) {
+    throw new Error(
+      `Cannot withdraw more than $${MAX_WITHDRAWAL_PER_TRANSACTION} in a single transaction`
+    );
   }
 
-  if (amount > 200) {
-    throw new Error("Cannot withdraw more than $200 in a single transaction");
+  if (todaysWithdrawn + amount > MAX_WITHDRAWAL_PER_DAY) {
+    throw new Error(
+      `Cannot withdraw more than $${MAX_WITHDRAWAL_PER_DAY} in a single day`
+    );
   }
 
-  if (todaysWithdrawn + amount > 400) {
-    throw new Error("Cannot withdraw more than $400 in a single day");
-  }
-
-  if (amount % 5 !== 0) {
-    throw new Error("Withdrawal amount must be in increments of $5");
+  if (amount % WITHDRAWAL_INCREMENT !== 0) {
+    throw new Error(
+      `Withdrawal amount must be in increments of $${WITHDRAWAL_INCREMENT}`
+    );
   }
 
   const newBalance = account.amount - amount;
 
   if (account.type === "credit") {
-    const limit = account.credit_limit ?? 0;
+    if (account.creditLimit == null) {
+      throw new Error("Credit limit not configured");
+    }
+
+    const limit = account.creditLimit;
+
     if (newBalance < -limit) {
       throw new Error("Cannot withdraw more than the credit limit");
     }
-  } else {
-    if (newBalance < 0) {
-      throw new Error("Cannot withdraw more than the account balance");
-    }
+  } else if (newBalance < 0) {
+    throw new Error("Cannot withdraw more than the account balance");
   }
 };
 
 export const validateDeposit = (account: Account, amount: number): void => {
-  if (amount <= 0) {
-    throw new Error("Deposit amount must be greater than 0");
-  }
+  ensurePositiveAmount(amount, "Deposit");
 
-  if (amount > 1000) {
-    throw new Error("Cannot deposit more than $1000 in a single transaction");
+  if (amount > MAX_DEPOSIT_PER_TRANSACTION) {
+    throw new Error(
+      `Cannot deposit more than $${MAX_DEPOSIT_PER_TRANSACTION} in a single transaction`
+    );
   }
 
   if (account.type === "credit") {
     const newBalance = account.amount + amount;
+
     if (newBalance > 0) {
-      throw new Error("Cannot deposit more than needed to pay off the credit account");
+      throw new Error(
+        "Cannot deposit more than needed to pay off the credit account"
+      );
     }
   }
 };
