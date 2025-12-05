@@ -38,5 +38,5 @@ INSERT INTO accounts
 VALUES
     (3, 'Jills Credit', -3000, 'credit', 10000),
     (6, 'Bills Credit', -60000, 'credit', 60000),
-    (9, 'Nancy Credit', -90000, 'credit', 100000)
+    (9, 'Nancy Credit', -90000, 'credit', 100000),
     (11, 'Test Low Credit', -200, 'credit', 500); -- Account with low credit balance and limit for testing
