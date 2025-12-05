@@ -2,7 +2,7 @@ import { query } from "../utils/db";
 import { getAccount } from "./accountHandler";
 import { validateWithdrawal, validateDeposit } from "../utils/transactionRules";
 import { getTodaysWithdrawnTotal } from "../utils/transactionHistory";
-import type { Account } from "../../types/shared/Account";
+import type { Account } from "../types/Account";
 
 export const withdrawal = async (accountID: string, amount: number) => {
   const account: Account = await getAccount(accountID);

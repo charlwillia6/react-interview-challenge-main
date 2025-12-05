@@ -1,5 +1,5 @@
 import { query } from "../utils/db";
-import type { Account, AccountType } from "../../types/shared/Account";
+import type { Account, AccountType } from "../types/Account";
 
 type AccountRow = {
   account_number: number;

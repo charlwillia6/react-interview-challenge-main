@@ -3,13 +3,13 @@ import './App.css';
 import { Grid } from '@mui/material';
 import { SignIn } from './components/SignIn';
 import { AccountDashboard } from './components/AccountDashboard';
-import { account } from './Types/Account';
+import type { Account } from './types/Account';
 
 
 
 export const App = () => {
   const [accountNumberError, setAccountNumberError] = useState(false);
-  const [account, setAccount] = useState<account | undefined>(undefined);
+  const [account, setAccount] = useState<Account | undefined>(undefined);
 
   const signIn = async (accountNumber: number) => {
     const response = await fetch(`http://localhost:3000/accounts/${accountNumber}`);
@@ -25,11 +25,11 @@ export const App = () => {
     const data = await response.json();
     console.log(data);
     setAccount({
-      accountNumber: data.account_number,
+      accountNumber: data.accountNumber,
       name: data.name,
       amount: data.amount,
       type: data.type,
-      creditLimit: data.credit_limit
+      creditLimit: data.creditLimit
     });
   }
   const signOut = async () => {

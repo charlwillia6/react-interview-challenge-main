@@ -1,10 +1,10 @@
 import React, { useState } from "react"
-import {account} from "../Types/Account"
+import type {Account} from "../types/Account"
 import Paper from "@mui/material/Paper/Paper";
 import { Button, Card, CardContent, Grid, TextField } from "@mui/material";
 
 type AccountDashboardProps = {
-  account: account;
+  account: Account;
   signOut: () => Promise<void>;
 }
 
@@ -31,11 +31,11 @@ export const AccountDashboard = (props: AccountDashboardProps) => {
 
     const data = await response.json();
     setAccount({
-      accountNumber: data.account_number,
+      accountNumber: data.accountNumber,
       name: data.name,
       amount: data.amount,
       type: data.type,
-      creditLimit: data.credit_limit
+      creditLimit: data.creditLimit
     });
   }
 
@@ -55,11 +55,11 @@ export const AccountDashboard = (props: AccountDashboardProps) => {
     
     const data = await response.json();
     setAccount({
-      accountNumber: data.account_number,
+      accountNumber: data.accountNumber,
       name: data.name,
       amount: data.amount,
       type: data.type,
-      creditLimit: data.credit_limit
+      creditLimit: data.creditLimit
     });
   }
 
