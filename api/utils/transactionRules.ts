@@ -1,4 +1,4 @@
-import type { Account } from "../../shared/Account";
+import type { Account } from "../../types/shared/Account";
 
 const MAX_WITHDRAWAL_PER_TRANSACTION = 200;
 const MAX_WITHDRAWAL_PER_DAY = 400;
