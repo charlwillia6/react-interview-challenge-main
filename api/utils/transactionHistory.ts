@@ -1,6 +1,8 @@
 import { query } from "./db";
 
-export const getTodaysWithdrawnTotal = async (accountID: string): Promise<number> => {
+export const getTodaysWithdrawnTotal = async (
+  accountID: string
+): Promise<number> => {
   const res = await query(
     `
     SELECT COALESCE(SUM(amount), 0) AS total
@@ -12,5 +14,5 @@ export const getTodaysWithdrawnTotal = async (accountID: string): Promise<number
     [accountID]
   );
 
-  return Number(res.rows[0].total) || 0;
+  return Number(res.rows[0]?.total ?? 0);
 };
